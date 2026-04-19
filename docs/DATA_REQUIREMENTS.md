@@ -1,38 +1,221 @@
-Mandatory files referenced in the original workflow:
+# Data Requirements
 
-Raw biological data
-- Data_updated.xlsx
-- xlsx1.xlsx
-- xlsx2.xlsx
-- xlsx3.xlsx
-- xlsx4.xlsx
+## Overview
 
-Taxonomy and metadata
-- Natuurpunt_taxa.xlsx
-- Lat_Ned.xlsx
-- species_info_publication_GBIF.xlsx
-- FungalTraits.xlsx
+This document lists the raw files, spatial files, metadata tables, and preprocessed outputs required for the Flanders fungal Red List app.
 
-Tabular spatial lookups
-- tblIFBLkwartierhokEcodistrict.csv
-- tblIFBLkwartier.csv
+## A. Raw biological data
 
-Spatial data
-- ifbl01x01 shapefile
-- ifbl04x04.shp
-- IFBL_kwartierhokken.kml
-- ecodistrict2002 shapefile
-- ecoregio2002 shapefile
-- Vlaanderen.Rdata
+### 1. Funbel input
+**File:** `data_raw/funbel/Data_updated.xlsx`  
+**Sheet:** `Data genera`
 
-Optional
-- Hoofdrivieren.Rdata
-- legacy output tables for validation
+Expected important columns from the old script:
+- `Genus`
+- `Soortnaam`
+- `Species`
+- `Datum`
+- `Uurhok`
+- `Kwartier`
+- `Nednaam`
 
-Expected preprocessed outputs
-- app_data/records_clean.rds
-- app_data/records_analysis.rds
-- app_data/species_master.rds
-- app_data/excluded_records.csv
-- app_data/taxon_audit.csv
-- app_data/settings_defaults.csv
+Purpose:
+- historical and recent occurrence records from Funbel
+- taxonomic base used in the legacy workflow
+
+### 2. waarnemingen.be / Natuurpunt inputs
+**Files:**
+- `data_raw/waarnemingen/xlsx1.xlsx`
+- `data_raw/waarnemingen/xlsx2.xlsx`
+- `data_raw/waarnemingen/xlsx3.xlsx`
+- `data_raw/waarnemingen/xlsx4.xlsx`
+
+Expected important columns inferred from the old script:
+- `naam_lat`
+- `naam_nl`
+- `datum`
+- `status`
+- `lon`
+- `lat`
+
+Purpose:
+- waarnemingen.be occurrence records
+- combined with Funbel to form the main backend
+
+## B. Taxonomy and metadata
+
+### 3. waarnemingen taxonomy harmonization
+**File:** `data_raw/taxonomy/Natuurpunt_taxa.xlsx`  
+**Sheet:** `herleide lijst`
+
+Expected columns:
+- `naam_lat`
+- `updated_name`
+- optional vernacular columns
+
+Purpose:
+- harmonize waarnemingen.be names to accepted names
+
+### 4. Latin / Dutch naming metadata
+**File:** `data_raw/metadata/Lat_Ned.xlsx`
+
+Purpose:
+- enrich species outputs with Dutch names or related naming metadata
+
+### 5. Publication / GBIF metadata
+**File:** `data_raw/metadata/species_info_publication_GBIF.xlsx`
+
+Purpose:
+- enrich species-level outputs with supporting metadata
+
+### 6. Fungal trait metadata
+**File:** `data_raw/traits/FungalTraits.xlsx`
+
+Expected columns from the old workflow:
+- `GENUS`
+- `Family`
+- `Order`
+
+Recommended additional columns if available:
+- guild
+- trophic mode
+- substrate
+- host
+- detectability class
+- taxonomic difficulty
+
+## C. Spatial lookup tables
+
+### 7. IFBL quarter-grid to ecodistrict lookup
+**File:** `spatial/lookups/tblIFBLkwartierhokEcodistrict.csv`
+
+Expected columns inferred from the old script:
+- `IFBLuurhok`
+- `REGIO`
+- `DISTRICT`
+- optional `Xcoord`
+- optional `Ycoord`
+
+Purpose:
+- link Flemish IFBL quarter-grids to ecodistricts and ecoregions
+
+### 8. Flemish IFBL quarter-grid list
+**File:** `spatial/lookups/tblIFBLkwartier.csv`
+
+Expected columns:
+- `IFBL`
+
+Purpose:
+- define which IFBL quarter-grids belong to Flanders
+
+## D. Spatial geometry files
+
+### 9. IFBL 1 × 1 km quarter-grid geometry
+**Folder or shapefile:** `spatial/ifbl01x01/`
+
+Purpose:
+- quarter-grid mapping
+- occupancy visualization
+- legacy spatial unit support
+
+### 10. IFBL 2 × 2 km geometry
+**File:** `spatial/ifbl04x04/ifbl04x04.shp`
+
+Purpose:
+- default AOO unit in version 1
+
+### 11. IFBL quarter-grid KML
+**File:** `spatial/IFBL_kwartierhokken/IFBL_kwartierhokken.kml`
+
+Purpose:
+- assign quarter-grids from point coordinates where needed
+
+### 12. Ecodistrict geometry
+**Folder or shapefile:** `spatial/ecodistrict2002/`
+
+Purpose:
+- ecodistrict summaries
+- well-surveyed ecodistrict calculations
+- mapping
+
+### 13. Ecoregion geometry
+**Folder or shapefile:** `spatial/ecoregio2002/`
+
+Purpose:
+- ecological regional summaries
+
+### 14. Flanders boundary
+**File:** `spatial/boundaries/Vlaanderen.Rdata`
+
+Purpose:
+- overview maps
+- clipping and plotting support
+
+### 15. Hydrography
+**File:** `spatial/hydrography/Hoofdrivieren.Rdata`
+
+Purpose:
+- optional cartographic background layer
+
+## E. Legacy validation files
+
+These are not required for the app to run, but are strongly recommended for checking backward compatibility.
+
+Suggested location:
+`exports/legacy_validation/`
+
+Examples from the old workflow:
+- `BT_wide.csv`
+- `noTrendSpecs.csv`
+- `RLCFlanders_CriterionA_SpeciesIndex.csv`
+- `critA_SI.csv`
+- `critA_SI.xlsx`
+- `joined_data_Funbel_v8.xlsx`
+- `Funbel_critB_withRL_without_EoO_v8.xlsx`
+- `Funbel_Masterlist_without_EoO_v8.xlsx`
+- `joined_data_v8.xlsx`
+- `critB_withRL_without_EoO_v8.xlsx`
+- `Masterlist_without_EoO_v8.xlsx`
+- `Masterlist_Combined_v8.xlsx`
+
+## F. Preprocessed outputs required by the app
+
+These should be generated by the preprocessing script and stored in `app_data/`.
+
+Required outputs:
+- `app_data/records_clean.rds`
+- `app_data/records_analysis.rds`
+- `app_data/species_master.rds`
+- `app_data/excluded_records.csv`
+- `app_data/taxon_audit.csv`
+- `app_data/settings_defaults.csv`
+
+Recommended additional outputs:
+- `app_data/criterion_a_legacy_validation.csv`
+- `app_data/criterion_b_support_validation.csv`
+- `app_data/survey_units.rds`
+
+## G. Clean analysis schema expected after preprocessing
+
+The cleaned analysis table should ideally include:
+- `record_id`
+- `source_dataset`
+- `source_record_id`
+- `species_original`
+- `species_accepted`
+- `dutch_name`
+- `validation_status`
+- `date_original`
+- `date_parsed`
+- `year`
+- `month`
+- `ifbl_quarter`
+- `ifbl_2x2`
+- `ecodistrict`
+- `ecoregion`
+- `x_l72`
+- `y_l72`
+- `lon_wgs84`
+- `lat_wgs84`
+- `include_in_analysis`
+- `exclusion_reason`

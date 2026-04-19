@@ -1,35 +1,73 @@
-Primary backend = combined Funbel + waarnemingen.be dataset.
+# Method Rules
 
-Preprocessing is separate and run once by the project owner.
-App users work only from cleaned app inputs.
+## Core backend rule
 
-Criterion A:
-- First implementation must reproduce the old workflow as closely as possible.
-- Legacy-compatible defaults must be preserved.
-- All important thresholds/settings must be user-settable.
+The primary analytical backend is the combined Funbel + waarnemingen.be dataset.
 
-Criterion B:
-- Rebuild transparently.
-- Main emphasis for Flanders = current-period continuing decline + fragmentation.
-- EOO is supplementary, not the main emphasis.
+Funbel-only and waarnemingen.be-only analyses may be retained for validation or inspection, but the main application logic must use the combined backend.
 
-Validation:
-- Use validated records only in v1 calculations.
+## Separation of preprocessing and app runtime
 
-AOO unit:
-- Default = IFBL 2x2 km.
-- Optional setting = 1x1 km kwartierhok.
+Raw data cleaning, taxonomic harmonization, spatial assignment, and exclusion logging must happen in a separate preprocessing script.
 
-Period split:
-- Default split year = 2000.
-- Must be user-settable.
+The Shiny app must read only cleaned, preprocessed inputs.
 
-DD and RE:
-- Default legacy-compatible DD = occupied IFBL grids < 5 in both historical and current periods.
-- Default RE = historical occupied grids > 0 and current occupied grids = 0.
-- DD cutoff must be user-settable.
+## Criterion A
 
-Expert review:
-- Final category is expert-reviewed, not automated.
-- Provide fillable note fields per criterion/category.
-- Users must be able to inspect the raw record table for a selected species.
+The first implementation must reproduce the legacy Criterion A workflow as closely as possible.
+
+Legacy-compatible default settings:
+- historical period: 1800–2000
+- current period: 2001 onward
+- split year default: 2000
+
+Criterion A must remain user-configurable:
+- split year
+- DD cutoff
+- noTrend threshold
+- minimum occupancy threshold
+- other classification settings
+
+## Criterion B
+
+Criterion B must be rebuilt more transparently than in the old script.
+
+Main emphasis for Flanders:
+- continuing decline during the current period
+- fragmentation
+- occupancy structure
+
+EOO may be calculated as a supplementary output, but it is not the main Criterion B emphasis for Flemish fungi.
+
+## Validation rule
+
+Version 1 calculations use validated records only.
+
+Non-validated records may still be retained in the backend as excluded or flagged records for later review.
+
+## AOO rule
+
+Default analytical occupancy unit:
+- IFBL 2 × 2 km
+
+Optional user setting:
+- 1 × 1 km kwartierhok
+
+## DD and RE defaults
+
+Legacy-compatible default:
+- DD if occupied IFBL grids < 5 in both historical and current periods
+- RE if historical occupied grids > 0 and current occupied grids = 0
+
+The DD threshold must be user-settable.
+
+## Expert review
+
+The app must not make final Red List decisions automatically.
+
+Required expert-review functionality:
+- provisional criterion outputs
+- fillable note field per criterion/category
+- final expert-reviewed category assignment
+- species-level raw record inspection
+- exportable decision sheet

@@ -60,5 +60,8 @@ yearly occupied grids standardized by annual survey effort
 linear regression slope
 decline inferred when slope < 0 and model fit sufficiently strong
 
+Reference implementation:
+legacy_code/original_redlist_script.R
+
 EOO is weakly represented and should remain supplementary.
 

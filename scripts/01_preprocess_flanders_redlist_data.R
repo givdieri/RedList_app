@@ -129,6 +129,7 @@ read_delimited_auto <- function(path) {
   out <- readr::read_delim(
     path,
     delim = delim,
+    col_types = cols(.default = col_character()),
     locale = locale(encoding = "UTF-8"),
     show_col_types = FALSE,
     trim_ws = TRUE
@@ -139,6 +140,7 @@ read_delimited_auto <- function(path) {
     alt <- readr::read_delim(
       path,
       delim = ",",
+      col_types = cols(.default = col_character()),
       locale = locale(encoding = "UTF-8"),
       show_col_types = FALSE,
       trim_ws = TRUE
@@ -149,7 +151,9 @@ read_delimited_auto <- function(path) {
     }
   }
 
-  out
+  # Drop synthetic row-index columns that appear in legacy semicolon exports
+  out |>
+    select(!matches("^\\.\\.\\.[0-9]+$"))
 }
 
 load_main_records <- function(path, sheet = NULL) {

@@ -38,6 +38,22 @@ Rscript scripts/01_preprocess_flanders_redlist_data.R
 
 The preprocessing script also auto-installs missing R packages from CRAN when possible, and returns a clear error with Ubuntu `r-cran-*` fallback guidance if CRAN is blocked.
 
+## Optional GBIF fetch workflow (new)
+
+To build raw occurrence inputs from GBIF API (test taxa, Belgium + Flanders fallback filter):
+
+```r
+Rscript scripts/00_fetch_gbif_occurrences.R
+```
+
+Outputs are written to `data_raw/gbif/`:
+
+- `taxon_match_log.csv`
+- `occurrences_raw.csv`
+- `occurrences_flanders_filtered.csv`
+- `exclusion_log.csv`
+- `download_metadata.json`
+
 Expected outputs in `app_data/`:
 
 - `records_clean.rds`

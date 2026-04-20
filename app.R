@@ -23,6 +23,7 @@ ui <- fluidPage(
     column(width = 9, mod_species_ui("species"))
   ),
   tabsetPanel(
+    tabPanel("Readme", shiny::includeMarkdown("README.md")),
     tabPanel("Records", mod_records_ui("records")),
     tabPanel("Effort", mod_effort_ui("effort")),
     tabPanel("Criterion A", mod_criterion_a_ui("criterion_a")),

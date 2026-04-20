@@ -32,3 +32,16 @@ The new app should preserve the useful analytical structure of the old workflow 
 - modularity
 - user-settable thresholds
 - expert-review support
+
+## Live Czech app reference
+
+The current deployed Czech fungal Red List app is used as an interface and workflow reference:
+
+https://redlist.shinyapps.io/workflow/
+
+It is not a methodological template for Flemish criteria, but it is an important reference for:
+- species-first navigation
+- side-panel parameter inputs
+- map / records / analysis / readme tab structure
+- headline metric display
+- downloadable outputs

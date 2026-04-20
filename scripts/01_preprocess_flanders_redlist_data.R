@@ -6,7 +6,6 @@ suppressPackageStartupMessages({
   library(stringr)
   library(tidyr)
   library(readr)
-  library(janitor)
 })
 
 # -----------------------------

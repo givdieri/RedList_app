@@ -24,17 +24,13 @@ Final Red List categories are always expert-reviewed.
 
 ## Primary backend
 
-The main analytical backend is:
-
-## combined FUNBEL + waarnemingen.be dataset
+The primary v1 analytical backend is the current combined working dataset represented by `Data_updated.xlsx`, with Flemish spatial restriction applied through IFBL reference tables.
 
 represented by:
 
 ```text id="f15s1v"
 data_raw/Data_updated.xlsx
 ```
-
-with Flemish spatial restriction applied through IFBL reference tables.
 
 This replaces older separate FUNBEL-only and Natuurpunt-only workflows.
 

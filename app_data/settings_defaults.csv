@@ -1,0 +1,9 @@
+setting_key,setting_value,description
+split_year,2000,Historical <= split year; current > split year.
+dd_grid_threshold,5,DD default when occupied IFBL grids < threshold in both periods.
+criterion_a_cr_decline,-80,Criterion A CR decline threshold (%).
+criterion_a_en_decline,-50,Criterion A EN decline threshold (%).
+criterion_a_vu_decline,-30,Criterion A VU decline threshold (%).
+criterion_a_no_trend_common_fraction,0.75,Legacy noTrend commonness fraction.
+year_min,1800,Minimum accepted year in preprocessing.
+year_max,2026,Maximum accepted year in preprocessing.

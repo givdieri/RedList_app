@@ -1,0 +1,19 @@
+{
+  "name": "Flanders Red List App",
+
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+
+  "postCreateCommand": "bash .devcontainer/setup.sh",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "REditorSupport.r",
+        "RDebugger.r-debugger",
+        "ms-vscode.vscode-json"
+      ]
+    }
+  },
+
+  "remoteUser": "vscode"
+}
